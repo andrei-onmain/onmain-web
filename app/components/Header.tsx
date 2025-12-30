@@ -1,27 +1,47 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
+  const linkClass =
+    "group relative px-2 py-1 text-white/90 transition-colors duration-200 hover:text-gray-200";
+
+  const underlineClass =
+    "absolute left-0 -bottom-1 h-[2px] w-full origin-left scale-x-0 bg-gray-200 transition-transform duration-200 group-hover:scale-x-100";
+
   return (
-    <header className="w-full bg-gradient-to-r from-[#003449] to-[#008caa]">
-      <div className="mx-auto flex h-14 max-w-6xl items-center px-6">
+   <header className="fixed top-0 left-15 right-0 z-50 h-16 bg-transparent">
+      <div className="mx-auto flex h-full max-w-6xl items-center px-6">
         {/* Logo (left) */}
-        <Link href="/" className="text-white font-extrabold tracking-[0.18em]">
-          ONMAIN
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="Onmain"
+            width={200}
+            height={40}
+            priority
+          />
         </Link>
 
         {/* Menu (right) */}
-        <nav className="ml-auto flex items-center gap-8 text-sm text-white">
-          <Link className="hover:text-white/100 text-white/90" href="/it-maintenance">
+        <nav className="ml-auto flex items-center gap-8 text-sm">
+          <Link href="/it-maintenance" className={linkClass}>
             IT maintenance
+            <span className={underlineClass} />
           </Link>
-          <Link className="hover:text-white/100 text-white/90" href="/mainsearch-ai">
+
+          <Link href="/mainsearch-ai" className={linkClass}>
             MainSearch AI
+            <span className={underlineClass} />
           </Link>
-          <Link className="hover:text-white/100 text-white/90" href="/contact">
+
+          <Link href="/contact" className={linkClass}>
             Contact
+            <span className={underlineClass} />
           </Link>
-          <Link className="hover:text-white/100 text-white/90" href="/about-us">
+
+          <Link href="/about-us" className={linkClass}>
             About us
+            <span className={underlineClass} />
           </Link>
         </nav>
       </div>
