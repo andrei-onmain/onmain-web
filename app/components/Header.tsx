@@ -111,32 +111,21 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile burger */}
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="relative z-20 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
-          >
-            <span className="relative h-4 w-5">
-              <span
-                className={`absolute left-0 top-0 h-[2px] w-5 bg-white transition-all duration-200 ${
-                  open ? "top-[7px] rotate-45" : ""
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[7px] h-[2px] w-5 bg-white transition-all duration-200 ${
-                  open ? "opacity-0" : ""
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[14px] h-[2px] w-5 bg-white transition-all duration-200 ${
-                  open ? "top-[7px] -rotate-45" : ""
-                }`}
-              />
-            </span>
-          </button>
+       {/* Mobile burger */}
+<button
+  type="button"
+  aria-label="Open menu"
+  aria-expanded={open}
+  onClick={() => setOpen(true)}
+  className="relative z-20 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
+>
+  <span className="relative h-4 w-5">
+    <span className="absolute left-0 top-0 h-[2px] w-5 bg-white" />
+    <span className="absolute left-0 top-[7px] h-[2px] w-5 bg-white" />
+    <span className="absolute left-0 top-[14px] h-[2px] w-5 bg-white" />
+  </span>
+</button>
+
         </div>
 
         {/* Mobile menu overlay */}
@@ -154,7 +143,21 @@ export default function Header() {
           />
 
           {/* Sheet */}
+
+          <button
+  type="button"
+  aria-label="Close menu"
+  onClick={() => setOpen(false)}
+  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/15"
+>
+  <span className="relative h-4 w-4">
+    <span className="absolute left-0 top-1/2 h-[2px] w-4 -translate-y-1/2 rotate-45 bg-white" />
+    <span className="absolute left-0 top-1/2 h-[2px] w-4 -translate-y-1/2 -rotate-45 bg-white" />
+  </span>
+</button>
+
           <div
+          
             className={`absolute right-0 top-0 h-full w-[86%] max-w-sm transform transition-transform duration-250 ${
               open ? "translate-x-0" : "translate-x-full"
             }`}
