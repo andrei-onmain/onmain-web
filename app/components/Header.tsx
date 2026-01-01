@@ -122,24 +122,25 @@ export default function Header() {
   <span className="relative h-4 w-5">
     {/* top bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-all duration-200 ${
-        open ? "top-[6px] w-3 rotate-45" : "top-0 w-5"
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-200 ease-out ${
+        open ? "top-[7px] w-4 rotate-45" : "top-0 w-5"
       }`}
     />
     {/* middle bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-all duration-200 ${
-        open ? "top-[6px] w-3 opacity-0" : "top-[7px] w-5 opacity-100"
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[opacity,width] duration-200 ease-out ${
+        open ? "top-[7px] w-4 opacity-0" : "top-[7px] w-5 opacity-100"
       }`}
     />
     {/* bottom bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-all duration-200 ${
-        open ? "top-[6px] w-3 -rotate-45" : "top-[14px] w-5"
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-200 ease-out ${
+        open ? "top-[7px] w-4 -rotate-45" : "top-[14px] w-5"
       }`}
     />
   </span>
 </button>
+
 
 
 
