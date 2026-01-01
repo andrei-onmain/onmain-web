@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ReviewsCarousel from "./components/ReviewsCarousel";
 
+
 export default function HomePage() {
   return (
     <main className="bg-white">
@@ -208,4 +209,9 @@ export default function HomePage() {
 
     </main>
   );
+
+
+  
 }
+
+
