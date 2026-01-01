@@ -21,21 +21,18 @@ export default function ScrollBrush({
   const opacity = 1 - t; // gets dimmer
   const translateY = y;  // follows scroll
 
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{
-        // follow the page as you scroll
-        transform: `translateY(${translateY}px)`,
-        opacity,
-      }}
-    >
-      {/* soft fade at bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
+return (
+  <div
+    aria-hidden
+    className="pointer-events-none fixed inset-0"
+    style={{ opacity }}
+  >
+    {/* soft fade at bottom */}
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
 
-      {/* “brushed” texture (CSS-only) */}
-      <div className="absolute inset-0 brush-texture" />
-    </div>
-  );
+    {/* “brushed” texture (CSS-only) */}
+    <div className="absolute inset-0 brush-texture" />
+  </div>
+);
+
 }
