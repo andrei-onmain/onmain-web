@@ -183,7 +183,6 @@ export default function HomePage() {
         </div>
 
         <div className="mt-5 text-xs text-white/55">
-          Replace placeholders above with your official details.
         </div>
       </div>
     </div>
