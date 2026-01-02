@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ReviewsCarousel from "./components/ReviewsCarousel";
 import MainSearchAISection from "./components/MainSearchAISection";
+import OnmainSystemsSection from "./components/OnmainSystemsSection";
 
 
 
@@ -33,7 +34,7 @@ export default function HomePage() {
       <section className="py-16">
         <div className="mx-auto max-w-5xl px-6">
           <p className="text-center text-2xl md:text-3xl text-black/65 leading-relaxed">
-            Onmain aims to become a conglomerate of industries that passion us, with a focus on innovation.
+            Onmain aims to become a conglomerate of industries that inspire us, with a focus on innovation.
           </p>
         </div>
       </section>
@@ -47,41 +48,20 @@ export default function HomePage() {
       </div>
 
       {/* ONMAIN SYSTEMS */}
-      <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-xl font-semibold text-black/80">Onmain Systems</h2>
+<section className="py-14">
+  <div className="mx-auto max-w-6xl px-6">
+    <OnmainSystemsSection
+      description="Our IT maintenance division that specialises in device diagnostics and repairs, along with software solutions and website development."
+      href="/it-maintenance"
+      linkText="Find out more (IT maintenance)"
+    />
 
-          <div className="mt-4 border-t border-black/15" />
+    <ReviewsCarousel />
+  </div>
+</section>
 
-          {/* angled panel */}
-          <div className="mt-5">
-            <div
-              className="relative rounded-sm bg-[#efefef] p-8 md:p-10"
-              style={{
-                clipPath:
-                  "polygon(0 0, 82% 0, 100% 18%, 100% 100%, 0 100%)",
-              }}
-            >
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <p className="max-w-xl text-black/70 leading-relaxed">
-                  Our IT maintenance division that specialises in device diagnostics and repairs,
-                  along with software solutions and website development.
-                </p>
 
-                <Link
-                  href="/it-maintenance"
-                  className="text-black/60 underline underline-offset-4 hover:text-black/80 md:text-right"
-                >
-                  Find out more (IT maintenance)
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* real-time rating + carousel */}
-          <ReviewsCarousel />
-        </div>
-      </section>
+      
 
     {/* MAINSEARCH AI */}
 <MainSearchAISection />

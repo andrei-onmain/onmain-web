@@ -1,106 +1,140 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode, useEffect, useRef, useState } from "react";
-
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          obs.disconnect(); // reveal once
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -15% 0px", // triggers as you scroll down into it
-      }
-    );
-
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={[
-        className,
-        "will-change-transform",
-        "transition-[opacity,transform] duration-1000 ease-out",
-        "motion-reduce:transition-none motion-reduce:transform-none",
-        shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
-      ].join(" ")}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function MainSearchAISection() {
   return (
-    <section className="py-10">
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Title line */}
-        <div className="flex items-center gap-5">
-          <div className="h-px flex-1 bg-black/25" />
-          <h2 className="text-2xl text-black/55">MainSearch AI</h2>
-          <div className="h-px flex-1 bg-black/25" />
-        </div>
+    <section
+      id="mainsearch-ai"
+      className="relative isolate overflow-hidden py-24 sm:py-28"
+    >
+      {/* Base (your signature blue) */}
+      <div className="absolute inset-0 -z-10 bg-[#061f26]" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b5560]/35 via-[#062a33]/55 to-black/75" />
 
-        {/* Content */}
-        <div className="mx-auto mt-14 max-w-3xl text-center">
-          <Reveal delay={0}>
-            <div className="flex items-start justify-center gap-6">
-              <span className="mt-3.5 h-px w-14 bg-black/40" />
-              <p className="text-xl md:text-2xl text-black/55 leading-relaxed">
+      {/* AppleTV-like faint rainbow glow (subtle, AI vibe) */}
+      <div className="absolute inset-0 -z-10 opacity-[0.22]">
+        <div className="rainbowBlob absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full blur-[90px]" />
+        <div className="rainbowBlob2 absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full blur-[110px]" />
+      </div>
+
+      {/* Soft teal bloom */}
+      <div className="absolute inset-0 -z-10 opacity-[0.22] [background:radial-gradient(circle_at_18%_25%,rgba(11,85,96,0.55),transparent_55%),radial-gradient(circle_at_78%_38%,rgba(6,42,51,0.55),transparent_60%)]" />
+
+      {/* Grain (makes it premium) */}
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.10] mix-blend-overlay [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1px,transparent_1px,transparent_3px)]" />
+
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Glass “panel” */}
+        <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.04] shadow-[0_28px_90px_rgba(0,0,0,0.35)]">
+          {/* Inner highlight */}
+          <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/10" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
+
+          {/* Subtle moving sheen */}
+          <div className="pointer-events-none absolute -left-40 top-[-120px] h-[260px] w-[520px] rotate-12 bg-white/10 blur-3xl opacity-40 sheen" />
+
+          <div className="relative px-7 py-14 sm:px-14 sm:py-16">
+            {/* Title row with lines */}
+            <div className="flex items-center gap-6">
+              <div className="h-px flex-1 bg-white/15" />
+              <h2 className="text-center text-[clamp(1.7rem,3vw,2.2rem)] font-medium tracking-tight text-white/80">
+                MainSearch <span className="font-semibold text-white">AI</span>
+              </h2>
+              <div className="h-px flex-1 bg-white/15" />
+            </div>
+
+            <div className="mx-auto mt-10 max-w-3xl space-y-7 text-center">
+              <p className="text-[clamp(1.1rem,2vw,1.55rem)] leading-relaxed text-white/75">
                 A new way to find the business you need
               </p>
-            </div>
-          </Reveal>
 
-          <Reveal delay={500} className="mt-9">
-            <div className="flex items-start justify-center gap-6">
-              <span className="mt-3.5 h-px w-14 bg-black/40" />
-              <p className="text-xl md:text-2xl text-black/55 leading-relaxed">
-                AI-powered to revolutionise the ease of connecting the client with a business.
+              <div className="mx-auto h-px w-20 bg-white/15" />
+
+              <p className="text-[clamp(1.05rem,1.9vw,1.45rem)] leading-relaxed text-white/70">
+                AI-powered to revolutionise the ease of connecting clients with businesses.
               </p>
+
+              <p className="pt-1 text-[clamp(1.0rem,1.8vw,1.35rem)] leading-relaxed text-white/65">
+                Starting with accurate pricing quotations for Onmain Systems.
+              </p>
+
+              <div className="pt-6">
+                <Link
+                  href="/mainsearch-ai"
+                  className="group inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-7 py-3 text-sm font-semibold text-white/85 backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:border-white/30 hover:bg-white/10"
+                >
+                  Find out more
+                  <span className="ml-2 inline-block transition-transform duration-500 group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </Link>
+              </div>
             </div>
-          </Reveal>
-
-          <Reveal delay={1000} className="mt-10">
-            <p className="text-lg md:text-xl text-black/60 leading-relaxed">
-              Starting with accurate pricing quotations for Onmain Systems.
-            </p>
-          </Reveal>
-
-          <Reveal delay={1500} className="mt-8">
-            <Link
-              href="/mainsearch-ai"
-              className="inline-flex items-baseline gap-2 text-lg md:text-xl text-black/60 hover:text-black/80"
-            >
-              <span className="underline underline-offset-4">Find out more</span>
-              <span className="text-black/50">(Link to MainSearch AI)</span>
-            </Link>
-          </Reveal>
+          </div>
         </div>
       </div>
+
+      {/* Local CSS for the rainbow + motion (no Tailwind config needed) */}
+      <style jsx>{`
+        .rainbowBlob {
+          background: conic-gradient(
+            from 180deg,
+            rgba(255, 0, 122, 0.55),
+            rgba(255, 200, 0, 0.45),
+            rgba(0, 255, 163, 0.45),
+            rgba(0, 170, 255, 0.45),
+            rgba(190, 0, 255, 0.45),
+            rgba(255, 0, 122, 0.55)
+          );
+          mix-blend-mode: screen;
+          animation: slowSpin 18s linear infinite;
+        }
+        .rainbowBlob2 {
+          background: conic-gradient(
+            from 90deg,
+            rgba(0, 170, 255, 0.45),
+            rgba(0, 255, 163, 0.40),
+            rgba(255, 200, 0, 0.38),
+            rgba(255, 0, 122, 0.42),
+            rgba(190, 0, 255, 0.40),
+            rgba(0, 170, 255, 0.45)
+          );
+          mix-blend-mode: screen;
+          animation: slowSpin2 26s linear infinite;
+        }
+        .sheen {
+          animation: drift 7.5s ease-in-out infinite;
+        }
+
+        @keyframes slowSpin {
+          0% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
+          100% {
+            transform: translate3d(0, 0, 0) rotate(360deg);
+          }
+        }
+        @keyframes slowSpin2 {
+          0% {
+            transform: translate3d(0, 0, 0) rotate(360deg);
+          }
+          100% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
+        }
+        @keyframes drift {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0) rotate(12deg);
+            opacity: 0.35;
+          }
+          50% {
+            transform: translate3d(80px, 20px, 0) rotate(12deg);
+            opacity: 0.55;
+          }
+        }
+      `}</style>
     </section>
   );
 }
