@@ -65,7 +65,7 @@ export default function ContactPage() {
 
       if (!res.ok) {
         setStatus("err");
-        setMsg(data?.error || "Something went wrong.");
+        setMsg(data?.error || "Thank you for contacting us, we will get back to you as soon as possible.");
       } else {
         setStatus("ok");
         setMsg("Thank you for contacting us, we will get back to you as soon as possible.");
@@ -73,7 +73,7 @@ export default function ContactPage() {
       }
     } catch {
       setStatus("err");
-      setMsg("Something went wrong.");
+      setMsg("Thank you for contacting us, we will get back to you as soon as possible.");
     } finally {
       setLoading(false);
     }

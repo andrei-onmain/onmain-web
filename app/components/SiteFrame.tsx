@@ -17,19 +17,21 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   const isHome = pathname === "/";
-  const match = NAV.find(
-    (n) => pathname === n.href || pathname.startsWith(n.href + "/")
-  );
+  const match = NAV.find((n) => pathname === n.href || pathname.startsWith(n.href + "/"));
+
+  // Pages that have their own custom header strip/banner
+  const hideTopHero =
+    isHome ||
+    pathname === "/contact" ||
+    pathname.startsWith("/contact/") ||
+    pathname === "/about-us" ||
+    pathname.startsWith("/about-us/");
 
   return (
     <>
       <Header />
 
-      {/* Keep homepage exactly as-is (it already has its own hero). */}
-     {!isHome && pathname !== "/contact" && (
-  <TopHero title={match?.label ?? "Onmain"} />
-)}
-
+      {!hideTopHero && <TopHero title={match?.label ?? "Onmain"} />}
 
       {children}
 

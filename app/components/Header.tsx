@@ -1,5 +1,6 @@
 "use client";
 
+
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -20,7 +21,7 @@ export default function Header() {
   const ticking = useRef(false);
   const pathname = usePathname();
 
-  const showHeaderBg = pathname === "/contact";
+const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
 
   useEffect(() => setOpen(false), [pathname]);
 

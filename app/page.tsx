@@ -33,7 +33,7 @@ export default function HomePage() {
       {/* STATEMENT */}
       <section className="py-16">
         <div className="mx-auto max-w-5xl px-6">
-          <p className="text-center text-2xl md:text-3xl text-black/65 leading-relaxed">
+          <p className="text-center text-2xl md:text-3xl text-black/90 leading-relaxed">
             Onmain aims to become a conglomerate of industries that inspire us, with a focus on innovation.
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function HomePage() {
     <OnmainSystemsSection
       description="Our IT maintenance division that specialises in device diagnostics and repairs, along with software solutions and website development."
       href="/it-maintenance"
-      linkText="Find out more (IT maintenance)"
+      linkText="Find out more"
     />
 
     <ReviewsCarousel />

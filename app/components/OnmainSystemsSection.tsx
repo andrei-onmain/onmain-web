@@ -47,7 +47,7 @@ export default function OnmainSystemsSection({
     // less gap from the bar above
     <section className="pt-5 pb-10 sm:pt-8 sm:pb-12">
       {/* closer to edges on mobile */}
-      <div className="mx-auto max-w-6xl px-2 sm:px-6" ref={ref}>
+      <div className="mx-auto max-w-6xl px-1 sm:px-6" ref={ref}>
         {/* Headline banner */}
         <div
           className={[
@@ -92,13 +92,13 @@ export default function OnmainSystemsSection({
             {/* slightly tighter padding on mobile */}
             <div className="relative p-6 sm:p-8 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <p className="max-w-xl leading-relaxed text-white/80">
+                <p className="max-w-xl leading-relaxed text-white/100">
                   {description}
                 </p>
 
                 <Link
                   href={href}
-                  className="text-white/70 underline underline-offset-4 transition hover:text-white/90 md:text-right"
+                  className="text-white/100 underline underline-offset-4 transition hover:text-white/90 md:text-right"
                 >
                   {linkText}
                 </Link>
