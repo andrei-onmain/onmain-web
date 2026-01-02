@@ -63,7 +63,7 @@ export default function OnmainSystemsSection({
 
           {/* centred title */}
           <div className="relative flex min-h-[90px] items-center justify-center px-4 py-6 sm:px-8 text-center">
-            <h2 className="text-[clamp(1.7rem,2.6vw,2.4rem)] font-semibold tracking-tight text-black/85">
+            <h2 className="text-[clamp(2.2rem,2.6vw,3.4rem)] font-semibold tracking-tight text-black/100">
               {title}
             </h2>
           </div>
@@ -72,7 +72,7 @@ export default function OnmainSystemsSection({
         {/* Description panel */}
         <div
           className={[
-            "mt-4 relative overflow-hidden", // slightly tighter than mt-5
+            "mt-2 relative overflow-hidden", // slightly tighter than mt-5
             motion,
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
           ].join(" ")}
@@ -98,7 +98,7 @@ export default function OnmainSystemsSection({
 
                 <Link
                   href={href}
-                  className="text-white/100 underline underline-offset-4 transition hover:text-white/90 md:text-right"
+                  className="text-white/ underline underline-offset-4 transition hover:text-white/90 md:text-right"
                 >
                   {linkText}
                 </Link>

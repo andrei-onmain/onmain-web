@@ -18,7 +18,6 @@ export default function HomePage() {
           quality={70}
           className="object-cover object-center"
           sizes="100vw"
-          placeholder="blur"
         />
 
         {/* bottom fade/shadow like IT maintenance */}

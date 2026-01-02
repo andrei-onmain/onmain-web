@@ -84,7 +84,7 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
               quality={70}
               className="object-cover object-center"
               sizes="100vw"
-              placeholder="blur"
+              
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/25 to-black/60" />
           </div>

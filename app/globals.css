@@ -1,5 +1,72 @@
 @import "tailwindcss";
 
+/* MainSearch AI animations (moved from styled-jsx to globals) */
+.msai-rainbowBlob {
+  background: conic-gradient(
+    from 180deg,
+    rgba(255, 0, 122, 0.55),
+    rgba(255, 200, 0, 0.45),
+    rgba(0, 255, 163, 0.45),
+    rgba(0, 170, 255, 0.45),
+    rgba(190, 0, 255, 0.45),
+    rgba(255, 0, 122, 0.55)
+  );
+  mix-blend-mode: screen;
+  filter: blur(90px);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: msaiSlowSpin 18s linear infinite;
+}
+
+.msai-rainbowBlob2 {
+  background: conic-gradient(
+    from 90deg,
+    rgba(0, 170, 255, 0.45),
+    rgba(0, 255, 163, 0.40),
+    rgba(255, 200, 0, 0.38),
+    rgba(255, 0, 122, 0.42),
+    rgba(190, 0, 255, 0.40),
+    rgba(0, 170, 255, 0.45)
+  );
+  mix-blend-mode: screen;
+  filter: blur(110px);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: msaiSlowSpin2 26s linear infinite;
+}
+
+.msai-sheen {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0) rotate(12deg);
+  animation: msaiDrift 7.5s ease-in-out infinite;
+}
+
+@keyframes msaiSlowSpin {
+  0% { transform: translate3d(0,0,0) rotate(0deg); }
+  100% { transform: translate3d(0,0,0) rotate(360deg); }
+}
+@keyframes msaiSlowSpin2 {
+  0% { transform: translate3d(0,0,0) rotate(360deg); }
+  100% { transform: translate3d(0,0,0) rotate(0deg); }
+}
+@keyframes msaiDrift {
+  0%, 100% { transform: translate3d(0,0,0) rotate(12deg); opacity: 0.35; }
+  50% { transform: translate3d(80px,20px,0) rotate(12deg); opacity: 0.55; }
+}
+
+/* Performance: reduce/disable on mobile + respect reduced-motion */
+@media (max-width: 640px), (prefers-reduced-motion: reduce) {
+  .msai-rainbowBlob,
+  .msai-rainbowBlob2,
+  .msai-sheen {
+    animation: none !important;
+  }
+  .msai-rainbowBlob { filter: blur(60px); opacity: 0.14; }
+  .msai-rainbowBlob2 { filter: blur(70px); opacity: 0.12; }
+}
+
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -47,4 +114,10 @@ html {
 html {
   scroll-behavior: smooth;
 }
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 export default function MainSearchAISection() {
@@ -8,34 +6,31 @@ export default function MainSearchAISection() {
       id="mainsearch-ai"
       className="relative isolate overflow-hidden py-24 sm:py-28"
     >
-      {/* Base (your signature blue) */}
+      {/* Base */}
       <div className="absolute inset-0 -z-10 bg-[#061f26]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b5560]/35 via-[#062a33]/55 to-black/75" />
 
-      {/* AppleTV-like faint rainbow glow (subtle, AI vibe) */}
+      {/* Rainbow glow (animated via globals.css) */}
       <div className="absolute inset-0 -z-10 opacity-[0.22]">
-        <div className="rainbowBlob absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full blur-[90px]" />
-        <div className="rainbowBlob2 absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full blur-[110px]" />
+        <div className="msai-rainbowBlob absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full" />
+        <div className="msai-rainbowBlob2 absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full" />
       </div>
 
       {/* Soft teal bloom */}
       <div className="absolute inset-0 -z-10 opacity-[0.22] [background:radial-gradient(circle_at_18%_25%,rgba(11,85,96,0.55),transparent_55%),radial-gradient(circle_at_78%_38%,rgba(6,42,51,0.55),transparent_60%)]" />
 
-      {/* Grain (makes it premium) */}
+      {/* Grain */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.10] mix-blend-overlay [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1px,transparent_1px,transparent_3px)]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        {/* Glass “panel” */}
         <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.04] shadow-[0_28px_90px_rgba(0,0,0,0.35)]">
-          {/* Inner highlight */}
           <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/10" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
 
-          {/* Subtle moving sheen */}
-          <div className="pointer-events-none absolute -left-40 top-[-120px] h-[260px] w-[520px] rotate-12 bg-white/10 blur-3xl opacity-40 sheen" />
+          {/* moving sheen (animated via globals.css) */}
+          <div className="msai-sheen pointer-events-none absolute -left-40 top-[-120px] h-[260px] w-[520px] rotate-12 bg-white/10 blur-3xl opacity-40" />
 
           <div className="relative px-7 py-14 sm:px-14 sm:py-16">
-            {/* Title row with lines */}
             <div className="flex items-center gap-6">
               <div className="h-px flex-1 bg-white/15" />
               <h2 className="text-center text-[clamp(1.7rem,3vw,2.2rem)] font-medium tracking-tight text-white/80">
@@ -74,67 +69,6 @@ export default function MainSearchAISection() {
           </div>
         </div>
       </div>
-
-      {/* Local CSS for the rainbow + motion (no Tailwind config needed) */}
-      <style jsx>{`
-        .rainbowBlob {
-          background: conic-gradient(
-            from 180deg,
-            rgba(255, 0, 122, 0.55),
-            rgba(255, 200, 0, 0.45),
-            rgba(0, 255, 163, 0.45),
-            rgba(0, 170, 255, 0.45),
-            rgba(190, 0, 255, 0.45),
-            rgba(255, 0, 122, 0.55)
-          );
-          mix-blend-mode: screen;
-          animation: slowSpin 18s linear infinite;
-        }
-        .rainbowBlob2 {
-          background: conic-gradient(
-            from 90deg,
-            rgba(0, 170, 255, 0.45),
-            rgba(0, 255, 163, 0.40),
-            rgba(255, 200, 0, 0.38),
-            rgba(255, 0, 122, 0.42),
-            rgba(190, 0, 255, 0.40),
-            rgba(0, 170, 255, 0.45)
-          );
-          mix-blend-mode: screen;
-          animation: slowSpin2 26s linear infinite;
-        }
-        .sheen {
-          animation: drift 7.5s ease-in-out infinite;
-        }
-
-        @keyframes slowSpin {
-          0% {
-            transform: translate3d(0, 0, 0) rotate(0deg);
-          }
-          100% {
-            transform: translate3d(0, 0, 0) rotate(360deg);
-          }
-        }
-        @keyframes slowSpin2 {
-          0% {
-            transform: translate3d(0, 0, 0) rotate(360deg);
-          }
-          100% {
-            transform: translate3d(0, 0, 0) rotate(0deg);
-          }
-        }
-        @keyframes drift {
-          0%,
-          100% {
-            transform: translate3d(0, 0, 0) rotate(12deg);
-            opacity: 0.35;
-          }
-          50% {
-            transform: translate3d(80px, 20px, 0) rotate(12deg);
-            opacity: 0.55;
-          }
-        }
-      `}</style>
     </section>
   );
 }

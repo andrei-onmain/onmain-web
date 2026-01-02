@@ -9,6 +9,8 @@ type Service = {
   paragraphs: string[];
 };
 
+
+
 function useInView<T extends Element>(opts?: IntersectionObserverInit) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
@@ -312,6 +314,12 @@ if (res.ok) {
 }
 
 export default function ITMaintenancePage() {
+
+ useEffect(() => {
+    // Always start at the top when arriving on this route
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
+  
   const services: Service[] = useMemo(
     () => [
       {
