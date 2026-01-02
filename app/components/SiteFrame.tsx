@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -16,8 +16,16 @@ const NAV = [
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
+  // ALWAYS load every page at the top (no animation)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
   const isHome = pathname === "/";
-  const match = NAV.find((n) => pathname === n.href || pathname.startsWith(n.href + "/"));
+  const match = NAV.find(
+    (n) => pathname === n.href || pathname.startsWith(n.href + "/")
+
+  );
 
   // Pages that have their own custom header strip/banner
   const hideTopHero =
@@ -26,6 +34,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
     pathname.startsWith("/contact/") ||
     pathname === "/about-us" ||
     pathname.startsWith("/about-us/");
+
 
   return (
     <>
