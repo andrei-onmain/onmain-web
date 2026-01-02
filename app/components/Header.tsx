@@ -9,17 +9,30 @@ import { usePathname } from "next/navigation";
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
 const NAV = [
+  { href: "/", label: "Home" },
   { href: "/it-maintenance", label: "IT maintenance" },
   { href: "/mainsearch-ai", label: "MainSearch AI" },
   { href: "/contact", label: "Contact" },
   { href: "/about-us", label: "About us" },
 ];
 
+
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [open, setOpen] = useState(false);
   const ticking = useRef(false);
   const pathname = usePathname();
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+useEffect(() => {
+  const mq = window.matchMedia("(min-width: 768px)");
+  const onChange = () => setIsDesktop(mq.matches);
+  onChange();
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}, []);
+
 
 const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
 
@@ -84,8 +97,9 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
             backgroundColor: GLASS_TINT,
             borderBottom: `1px solid rgba(255, 255, 255, ${0.12 * t})`,
             boxShadow: `0 10px 30px rgba(0, 0, 0, ${0.18 * t})`,
-            backdropFilter: isScrolled ? "blur(16px) saturate(180%)" : "none",
-            WebkitBackdropFilter: isScrolled ? "blur(16px) saturate(180%)" : "none",
+            backdropFilter: isScrolled && isDesktop ? "blur(16px) saturate(180%)" : "none",
+            WebkitBackdropFilter: isScrolled && isDesktop ? "blur(16px) saturate(180%)" : "none",
+
             transition: "opacity 180ms ease",
           }}
         />

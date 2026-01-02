@@ -7,11 +7,13 @@ import Footer from "./Footer";
 import TopHero from "./TopHero";
 
 const NAV = [
+  { href: "/", label: "Home" },
   { href: "/it-maintenance", label: "IT maintenance" },
   { href: "/mainsearch-ai", label: "MainSearch AI" },
   { href: "/contact", label: "Contact" },
   { href: "/about-us", label: "About us" },
 ];
+
 
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
