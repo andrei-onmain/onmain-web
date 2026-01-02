@@ -20,12 +20,10 @@ export default function Header() {
   const ticking = useRef(false);
   const pathname = usePathname();
 
-  // Close menu after navigation
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const showHeaderBg = pathname === "/contact";
 
-  // Lock body scroll when menu open
+  useEffect(() => setOpen(false), [pathname]);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -50,7 +48,6 @@ export default function Header() {
   const t = clamp01(scrollY / 80);
   const isScrolled = scrollY > 0;
 
-  // Keep same tint; only opacity changes
   const GLASS_TINT = "rgba(8, 49, 58, 0.85)";
 
   const linkClass =
@@ -61,11 +58,26 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-16">
-      <div className="relative h-full">
+      <div className="relative h-full overflow-hidden">
+        {/* Contact-only header background image (NO more page-fixed strip) */}
+        {showHeaderBg && (
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+            <Image
+              src="/hero-bg3.png"
+              alt=""
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/25 to-black/60" />
+          </div>
+        )}
+
         {/* Glass */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 z-10"
           style={{
             opacity: t,
             backgroundColor: GLASS_TINT,
@@ -80,7 +92,7 @@ export default function Header() {
         {/* Highlights */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 z-20"
           style={{ opacity: t, transition: "opacity 180ms ease" }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/18 via-white/8 to-transparent" />
@@ -88,21 +100,14 @@ export default function Header() {
           <div className="absolute -right-20 top-2 h-16 w-44 rounded-full bg-white/12 blur-2xl" />
         </div>
 
-        <div className="mx-auto flex h-full max-w-6xl items-center px-4 sm:px-6">
+        <div className="relative z-30 mx-auto flex h-full max-w-6xl items-center px-4 sm:px-6">
           {/* Logo */}
-          <Link href="/" className="relative z-10 flex items-center">
-            <Image
-              src="/logo.png"
-              alt="Onmain"
-              width={160}
-              height={32}
-              priority
-              className="h-8 w-auto"
-            />
+          <Link href="/" className="flex items-center">
+            <Image src="/logo.png" alt="Onmain" width={160} height={32} priority className="h-8 w-auto" />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="relative z-10 ml-auto hidden items-center gap-8 text-sm md:flex">
+          <nav className="ml-auto hidden items-center gap-8 text-sm md:flex">
             {NAV.map((item) => (
               <Link key={item.href} href={item.href} className={linkClass}>
                 {item.label}
@@ -111,64 +116,37 @@ export default function Header() {
             ))}
           </nav>
 
-{/* Mobile burger */}
-<button
-  type="button"
-  aria-label="Open menu"
-  aria-expanded={open}
-  onClick={() => setOpen((v) => !v)}
-  className="relative z-20 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
->
-  {/* icon wrapper (nudges the whole icon down to center it in the circle) */}
-  <span className="relative h-4 w-5 translate-y-[1px]">
-    {/* top bar */}
-    <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
-        will-change-transform
-        transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
-        ${open ? "top-[7px] w-[19px] rotate-45 scale-105" : "top-0 w-5 rotate-0 scale-100"}
-      `}
-    />
-
-    {/* middle bar */}
-    <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
-        will-change-transform
-        transition-[opacity,transform,width] duration-250 ease-[cubic-bezier(.22,1,.36,1)]
-        ${open ? "top-[7px] w-[19px] opacity-0 scale-95" : "top-[7px] w-5 opacity-100 scale-100"}
-      `}
-    />
-
-    {/* bottom bar */}
-    <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
-        will-change-transform
-        transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
-        ${open ? "top-[7px] w-[19px] -rotate-45 scale-105" : "top-[14px] w-5 rotate-0 scale-100"}
-      `}
-    />
-  </span>
-</button>
-
-
-
+          {/* Mobile burger */}
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
+          >
+            <span className="relative h-4 w-5 translate-y-[1px]">
+              <span
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+                  ${open ? "top-[7px] w-[19px] rotate-45 scale-105" : "top-0 w-5 rotate-0 scale-100"}`}
+              />
+              <span
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[opacity,transform,width] duration-250 ease-[cubic-bezier(.22,1,.36,1)]
+                  ${open ? "top-[7px] w-[19px] opacity-0 scale-95" : "top-[7px] w-5 opacity-100 scale-100"}`}
+              />
+              <span
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+                  ${open ? "top-[7px] w-[19px] -rotate-45 scale-105" : "top-[14px] w-5 rotate-0 scale-100"}`}
+              />
+            </span>
+          </button>
         </div>
 
         {/* Mobile menu overlay */}
-        <div
-          className={`fixed inset-0 z-10 md:hidden ${
-            open ? "pointer-events-auto" : "pointer-events-none"
-          }`}
-        >
-          {/* Backdrop */}
+        <div className={`fixed inset-0 z-[60] md:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
           <div
             onClick={() => setOpen(false)}
-            className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${
-              open ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0"}`}
           />
-
-          {/* Sheet */}
           <div
             className={`absolute right-0 top-0 h-full w-[86%] max-w-sm transform transition-transform duration-250 ${
               open ? "translate-x-0" : "translate-x-full"
@@ -181,10 +159,7 @@ export default function Header() {
             }}
           >
             <div className="pt-20 px-6">
-              <div className="text-xs uppercase tracking-[0.25em] text-white/60">
-                Menu
-              </div>
-
+              <div className="text-xs uppercase tracking-[0.25em] text-white/60">Menu</div>
               <div className="mt-4 flex flex-col gap-2">
                 {NAV.map((item) => (
                   <Link
@@ -197,11 +172,8 @@ export default function Header() {
                   </Link>
                 ))}
               </div>
-
               <div className="mt-6 h-px bg-white/10" />
-              <div className="mt-4 text-xs text-white/50">
-                Onmain · London
-              </div>
+              <div className="mt-4 text-xs text-white/50">Onmain · London</div>
             </div>
           </div>
         </div>

@@ -3,41 +3,62 @@ import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
+function isEmail(s: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, description } = await req.json();
+    const body = await req.json();
 
-    if (!email || !phone) {
+    const name = String(body?.name || "").trim();
+    const email = String(body?.email || "").trim();
+    const phone = String(body?.phone || "").trim();
+    const issueType = String(body?.issueType || "").trim();
+    const description = String(body?.description || "").trim();
+
+    if (!email || !phone || !issueType) {
       return NextResponse.json(
-        { ok: false, error: "Email and phone are required." },
+        { error: "Email, phone and issue type are required." },
         { status: 400 }
+      );
+    }
+    if (!isEmail(email)) {
+      return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
+    }
+
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM, SMTP_TO } = process.env;
+
+    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
+      return NextResponse.json(
+        { error: "Email service is not configured (missing SMTP env vars)." },
+        { status: 500 }
       );
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT || 465),
-      secure: Number(process.env.SMTP_PORT || 465) === 465,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT),
+      secure: Number(SMTP_PORT) === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
     });
 
     await transporter.sendMail({
-      from: process.env.SMTP_FROM,
-      to: process.env.SMTP_TO,
+      from: SMTP_FROM,
+      to: SMTP_TO || "sales@onmain.co.uk",
       replyTo: email,
-      subject: `New website enquiry${name ? ` — ${name}` : ""}`,
+      subject: `New website enquiry — ${issueType}${name ? ` — ${name}` : ""}`,
       text: [
+        `Issue type: ${issueType}`,
         `Name: ${name || "-"}`,
         `Email: ${email}`,
         `Phone: ${phone}`,
-        "",
-        "Description:",
+        ``,
+        `Description:`,
         `${description || "-"}`,
       ].join("\n"),
     });
+
 
     return NextResponse.json(
       {

@@ -26,7 +26,10 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
       <Header />
 
       {/* Keep homepage exactly as-is (it already has its own hero). */}
-      {!isHome && <TopHero title={match?.label ?? "Onmain"} />}
+     {!isHome && pathname !== "/contact" && (
+  <TopHero title={match?.label ?? "Onmain"} />
+)}
+
 
       {children}
 
