@@ -119,28 +119,36 @@ export default function Header() {
   onClick={() => setOpen((v) => !v)}
   className="relative z-20 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
 >
-  <span className="relative h-4 w-5">
+  {/* icon wrapper (nudges the whole icon down to center it in the circle) */}
+  <span className="relative h-4 w-5 translate-y-[1px]">
     {/* top bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-200 ease-out ${
-        open ? "top-[7px] w-4 rotate-45" : "top-0 w-5"
-      }`}
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+        will-change-transform
+        transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+        ${open ? "top-[7px] w-[19px] rotate-45 scale-105" : "top-0 w-5 rotate-0 scale-100"}
+      `}
     />
+
     {/* middle bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[opacity,width] duration-200 ease-out ${
-        open ? "top-[7px] w-4 opacity-0" : "top-[7px] w-5 opacity-100"
-      }`}
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+        will-change-transform
+        transition-[opacity,transform,width] duration-250 ease-[cubic-bezier(.22,1,.36,1)]
+        ${open ? "top-[7px] w-[19px] opacity-0 scale-95" : "top-[7px] w-5 opacity-100 scale-100"}
+      `}
     />
+
     {/* bottom bar */}
     <span
-      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-200 ease-out ${
-        open ? "top-[7px] w-4 -rotate-45" : "top-[14px] w-5"
-      }`}
+      className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+        will-change-transform
+        transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+        ${open ? "top-[7px] w-[19px] -rotate-45 scale-105" : "top-[14px] w-5 rotate-0 scale-100"}
+      `}
     />
   </span>
 </button>
-
 
 
 
