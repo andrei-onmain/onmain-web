@@ -40,8 +40,11 @@ export default function AboutUsPage() {
           alt="Onmain background"
           fill
           priority
+           quality={70}
           className="object-cover object-center"
           sizes="100vw"
+          placeholder="blur"
+
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/20 to-black/55" />
       </div>

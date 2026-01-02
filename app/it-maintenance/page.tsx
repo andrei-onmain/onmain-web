@@ -353,7 +353,8 @@ export default function ITMaintenancePage() {
   }
 
   return (
-    <main className="bg-white pt-16">
+    <main className="bg-white">
+
       {/* HERO */}
        
       {/* WHITE STRIP BUTTON (your red-circled area) */}

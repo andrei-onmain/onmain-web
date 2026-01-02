@@ -10,6 +10,8 @@ export default function TopHero({ title }: { title?: string }) {
         priority
         className="object-cover object-center"
         sizes="100vw"
+        placeholder="blur"
+        quality={70}
       />
 
       {/* bottom fade like homepage */}
