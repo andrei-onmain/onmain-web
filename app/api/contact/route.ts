@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     if (!email || !phone) {
       return NextResponse.json(
-        { error: "Email and phone are required." },
+        { ok: false, error: "Email and phone are required." },
         { status: 400 }
       );
     }
@@ -28,21 +28,28 @@ export async function POST(req: Request) {
       from: process.env.SMTP_FROM,
       to: process.env.SMTP_TO,
       replyTo: email,
-      subject: `New website enquiry (${phone})`,
+      subject: `New website enquiry${name ? ` — ${name}` : ""}`,
       text: [
         `Name: ${name || "-"}`,
         `Email: ${email}`,
         `Phone: ${phone}`,
-        ``,
-        `Description:`,
+        "",
+        "Description:",
         `${description || "-"}`,
       ].join("\n"),
     });
 
-    return NextResponse.json({ ok: true }, { status: 200 });
-  } catch (err: any) {
     return NextResponse.json(
-      { error: err?.message || "Failed to send." },
+      {
+        ok: true,
+        message: "Thank you for contacting us, we will get back to you as soon as possible.",
+      },
+      { status: 200 }
+    );
+  } catch (err: any) {
+    console.error("CONTACT_API_ERROR:", err);
+    return NextResponse.json(
+      { ok: false, error: err?.message || "Thank you for contacting us, we will get back to you as soon as possible." },
       { status: 500 }
     );
   }
