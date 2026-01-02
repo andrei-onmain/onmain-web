@@ -222,27 +222,31 @@ function ContactForm() {
 
     try {
       const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload),
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
       });
 
-      const data = await res.json().catch(() => ({}));
+      const text = await res.text(); // safer than res.json()
+  let data: any = {};
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {}
 
-      if (!res.ok) {
-        setStatus("err");
-        setMsg(data?.error || "Something went wrong.");
-      } else {
-        setStatus("ok");
-        setMsg("Thank you for contacting us, we will get back to you as soon as possible.");
-        (e.currentTarget as HTMLFormElement).reset();
-      }
-    } catch {
-      setStatus("err");
-      setMsg("Failed to send.");
-    } finally {
-      setLoading(false);
-    }
+  if (!res.ok) {
+    setStatus("err");
+    setMsg(data?.error || "Something went wrong.");
+  } else {
+    setStatus("ok");
+    setMsg("Thank you for contacting us, we will get back to you as soon as possible.");
+    (e.currentTarget as HTMLFormElement).reset();
+  }
+} catch {
+  setStatus("err");
+  setMsg("Something went wrong.");
+} finally {
+  setLoading(false);
+}
   }
 
   return (

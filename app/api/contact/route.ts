@@ -26,9 +26,9 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
-      to: process.env.SMTP_TO || process.env.SMTP_USER,
+      to: process.env.SMTP_TO,
       replyTo: email,
-      subject: `New website enquiry${name ? ` — ${name}` : ""}`,
+      subject: `New website enquiry (${phone})`,
       text: [
         `Name: ${name || "-"}`,
         `Email: ${email}`,
@@ -39,12 +39,10 @@ export async function POST(req: Request) {
       ].join("\n"),
     });
 
-    // IMPORTANT: return only simple JSON
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Contact API error:", err);
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (err: any) {
     return NextResponse.json(
-      { error: "Failed to send." },
+      { error: err?.message || "Failed to send." },
       { status: 500 }
     );
   }

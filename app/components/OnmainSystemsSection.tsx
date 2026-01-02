@@ -45,7 +45,7 @@ export default function OnmainSystemsSection({
 
   return (
     <section className="py-14">
-      <div className="mx-auto max-w-6xl px-6" ref={ref}>
+      <div className="mx-auto max-w-6xl px-2 sm:px-6" ref={ref}>
         {/* Headline banner */}
         <div
           className={[
@@ -63,8 +63,8 @@ export default function OnmainSystemsSection({
           {/* Edge highlight */}
           <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
 
-          <div className="relative flex min-h-[90px] items-center justify-between px-6 py-6 sm:px-8">
-            <h2 className="text-xl font-semibold text-black/80">{title}</h2>
+          <div className="relative flex min-h-[90px] items-center justify-between px-4 py-5 sm:px-8">
+            <h2 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font tracking-tight text-black/85">{title}</h2>
           </div>
         </div>
 
