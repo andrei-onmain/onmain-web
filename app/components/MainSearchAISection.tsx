@@ -10,10 +10,24 @@ export default function MainSearchAISection() {
       <div className="absolute inset-0 -z-10 bg-[#061f26]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b5560]/35 via-[#062a33]/55 to-black/75" />
 
-      {/* Rainbow glow (animated via globals.css) */}
-      <div className="absolute inset-0 -z-10 opacity-[0.22]">
-        <div className="msai-rainbowBlob absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full" />
-        <div className="msai-rainbowBlob2 absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full" />
+      {/* Faint rainbow glow (STATIC - no animation) */}
+      <div className="absolute inset-0 -z-10 opacity-[0.20]">
+        <div
+          className="absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full blur-[90px]"
+          style={{
+            background:
+              "conic-gradient(from 180deg, rgba(255,0,122,0.50), rgba(255,200,0,0.40), rgba(0,255,163,0.40), rgba(0,170,255,0.40), rgba(190,0,255,0.40), rgba(255,0,122,0.50))",
+            mixBlendMode: "screen",
+          }}
+        />
+        <div
+          className="absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full blur-[110px]"
+          style={{
+            background:
+              "conic-gradient(from 90deg, rgba(0,170,255,0.42), rgba(0,255,163,0.36), rgba(255,200,0,0.34), rgba(255,0,122,0.38), rgba(190,0,255,0.36), rgba(0,170,255,0.42))",
+            mixBlendMode: "screen",
+          }}
+        />
       </div>
 
       {/* Soft teal bloom */}
@@ -27,8 +41,8 @@ export default function MainSearchAISection() {
           <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/10" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
 
-          {/* moving sheen (animated via globals.css) */}
-          <div className="msai-sheen pointer-events-none absolute -left-40 top-[-120px] h-[260px] w-[520px] rotate-12 bg-white/10 blur-3xl opacity-40" />
+          {/* Static sheen (no animation) */}
+          <div className="pointer-events-none absolute -left-40 top-[-120px] h-[260px] w-[520px] rotate-12 bg-white/10 blur-3xl opacity-45" />
 
           <div className="relative px-7 py-14 sm:px-14 sm:py-16">
             <div className="flex items-center gap-6">
