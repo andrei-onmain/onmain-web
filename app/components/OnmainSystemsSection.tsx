@@ -44,7 +44,9 @@ export default function OnmainSystemsSection({
     "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]";
 
   return (
-    <section className="py-14">
+    // less gap from the bar above
+    <section className="pt-5 pb-10 sm:pt-8 sm:pb-12">
+      {/* closer to edges on mobile */}
       <div className="mx-auto max-w-6xl px-2 sm:px-6" ref={ref}>
         {/* Headline banner */}
         <div
@@ -54,24 +56,23 @@ export default function OnmainSystemsSection({
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
           ].join(" ")}
         >
-          {/* Blue base */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/25 via-white to-white" />
-          {/* Subtle texture */}
           <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background:radial-gradient(circle_at_15%_30%,#0b5560,transparent_55%),radial-gradient(circle_at_85%_40%,#062a33,transparent_55%)]" />
-          {/* Moving blue glare */}
           <div className="pointer-events-none absolute -inset-y-10 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-[#0b5560]/25 to-transparent blur-xl opacity-80 onmain-glare" />
-          {/* Edge highlight */}
           <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
 
-          <div className="relative flex min-h-[90px] items-center justify-between px-4 py-5 sm:px-8">
-            <h2 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font tracking-tight text-black/85">{title}</h2>
+          {/* centred title */}
+          <div className="relative flex min-h-[90px] items-center justify-center px-4 py-6 sm:px-8 text-center">
+            <h2 className="text-[clamp(1.7rem,2.6vw,2.4rem)] font-semibold tracking-tight text-black/85">
+              {title}
+            </h2>
           </div>
         </div>
 
-        {/* Description panel with same effect */}
+        {/* Description panel */}
         <div
           className={[
-            "mt-5 relative overflow-hidden",
+            "mt-4 relative overflow-hidden", // slightly tighter than mt-5
             motion,
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
           ].join(" ")}
@@ -80,17 +81,16 @@ export default function OnmainSystemsSection({
           <div
             className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#061f26] shadow-[0_24px_80px_rgba(0,0,0,0.18)]"
             style={{
-              clipPath:
-                "polygon(0 0, 82% 0, 100% 18%, 100% 100%, 0 100%)",
+              clipPath: "polygon(0 0, 82% 0, 100% 18%, 100% 100%, 0 100%)",
             }}
           >
-            {/* Blue-only premium layers */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/55 via-[#062a33]/70 to-black/75" />
             <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background:radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.14),transparent_55%)]" />
             <div className="pointer-events-none absolute -inset-y-16 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-white/12 to-transparent blur-2xl opacity-70 onmain-glare" />
             <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
 
-            <div className="relative p-8 md:p-10">
+            {/* slightly tighter padding on mobile */}
+            <div className="relative p-6 sm:p-8 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                 <p className="max-w-xl leading-relaxed text-white/80">
                   {description}
