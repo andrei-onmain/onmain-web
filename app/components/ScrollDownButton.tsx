@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 type Props = {
   targetId: string;
@@ -8,57 +8,15 @@ type Props = {
 };
 
 export default function ScrollDownButton({ targetId, className }: Props) {
-  const rafRef = useRef<number | null>(null);
-
-  const stop = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = null;
-
-    window.removeEventListener("wheel", stop, { passive: true } as any);
-    window.removeEventListener("touchstart", stop, { passive: true } as any);
-    window.removeEventListener("mousedown", stop);
-    window.removeEventListener("keydown", stop);
-  }, []);
-
   const onClick = useCallback(() => {
     const target = document.getElementById(targetId);
     if (!target) return;
 
-    // Stop any previous animation
-    stop();
+    const headerOffset = 64; // header is h-16
+    const y = window.scrollY + target.getBoundingClientRect().top - headerOffset;
 
-    // Scroll so the first words hit just below the header
-    const headerOffset = 64; // your header is h-16
-    const startY = window.scrollY;
-    const targetY =
-      window.scrollY + target.getBoundingClientRect().top - headerOffset;
-
-    const distance = targetY - startY;
-    const duration = 900; // slow + smooth
-    const startTime = performance.now();
-
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-    // Allow user to interrupt instantly
-    window.addEventListener("wheel", stop, { passive: true } as any);
-    window.addEventListener("touchstart", stop, { passive: true } as any);
-    window.addEventListener("mousedown", stop);
-    window.addEventListener("keydown", stop);
-
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - startTime) / duration);
-      const y = startY + distance * easeOutCubic(t);
-      window.scrollTo(0, y);
-
-      if (t < 1 && rafRef.current !== null) {
-        rafRef.current = requestAnimationFrame(tick);
-      } else {
-        stop();
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-  }, [stop, targetId]);
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }, [targetId]);
 
   return (
     <button

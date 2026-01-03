@@ -20,6 +20,10 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const ticking = useRef(false);
   const pathname = usePathname();
+  useEffect(() => {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}, [pathname]);
+
 
   const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
 
