@@ -1,15 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 type Service = {
   id: string;
   title: string;
   paragraphs: string[];
 };
-
-
 
 function useInView<T extends Element>(opts?: IntersectionObserverInit) {
   const ref = useRef<T | null>(null);
@@ -33,8 +30,8 @@ function useInView<T extends Element>(opts?: IntersectionObserverInit) {
 function RevealLines({
   lines,
   active,
-  baseDelayMs = 150,
-  stepDelayMs = 500,
+  baseDelayMs = 120,
+  stepDelayMs = 280,
 }: {
   lines: string[];
   active: boolean;
@@ -42,14 +39,14 @@ function RevealLines({
   stepDelayMs?: number;
 }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {lines.map((txt, i) => (
         <p
           key={i}
           className={[
-            "text-center text-[clamp(1.05rem,2vw,1.45rem)] leading-relaxed text-white/85",
-            "transition-[opacity,transform,filter] duration-[1100ms] ease-[cubic-bezier(.22,1,.36,1)]",
-            active ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-2 blur-[1.5px]",
+            "text-center text-[clamp(0.98rem,1.55vw,1.18rem)] leading-relaxed text-white/85",
+            "transition-[opacity,transform,filter] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]",
+            active ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-2 blur-[1.2px]",
           ].join(" ")}
           style={{ transitionDelay: `${baseDelayMs + i * stepDelayMs}ms` }}
         >
@@ -67,18 +64,20 @@ function Slab({ service, index }: { service: Service; index: number }) {
   });
 
   const commonCard =
-    "relative overflow-hidden rounded-[28px] border border-white/10 bg-[#061f26] shadow-[0_24px_80px_rgba(0,0,0,0.18)]";
+    "relative overflow-hidden rounded-[24px] border border-white/10 bg-[#061f26] shadow-[0_22px_72px_rgba(0,0,0,0.18)]";
   const motion =
-    "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]";
+    "transition-[opacity,transform] duration-[850ms] ease-[cubic-bezier(.22,1,.36,1)]";
 
   return (
-    <section id={service.id} className="py-7 sm:py-9">
+    <section id={service.id} className="py-5 sm:py-6">
       <div className="mx-auto max-w-6xl px-6">
         <div
           ref={ref}
-          className={[commonCard, motion, inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"].join(
-            " "
-          )}
+          className={[
+            commonCard,
+            motion,
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+          ].join(" ")}
         >
           {/* Variant backgrounds */}
           {index === 0 && (
@@ -90,7 +89,8 @@ function Slab({ service, index }: { service: Service; index: number }) {
                 className="absolute inset-0"
                 style={{
                   clipPath: "polygon(0 0, 62% 0, 100% 40%, 100% 100%, 0 100%)",
-                  background: "linear-gradient(135deg, rgba(11,85,96,0.45), rgba(6,42,51,0.55))",
+                  background:
+                    "linear-gradient(135deg, rgba(11,85,96,0.45), rgba(6,42,51,0.55))",
                 }}
               />
               <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.10),transparent_55%)]" />
@@ -100,7 +100,7 @@ function Slab({ service, index }: { service: Service; index: number }) {
           {index === 1 && (
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-b from-[#0b5560]/35 via-[#062a33]/55 to-black/65" />
-              <div className="absolute inset-0 opacity-[0.18] [background:linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:48px_48px]" />
+              <div className="absolute inset-0 opacity-[0.16] [background:linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:52px_52px]" />
               <div className="absolute left-0 top-0 h-full w-[10px] bg-gradient-to-b from-white/25 via-white/10 to-transparent" />
               <div className="absolute right-[-220px] top-[-220px] h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
               <div className="absolute left-[-160px] bottom-[-220px] h-[520px] w-[520px] rounded-full bg-[#0b5560]/25 blur-3xl" />
@@ -116,10 +116,11 @@ function Slab({ service, index }: { service: Service; index: number }) {
                 className="absolute inset-0"
                 style={{
                   clipPath: "polygon(0 0, 100% 0, 100% 62%, 42% 100%, 0 100%)",
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
                 }}
               />
-              <div className="absolute inset-0 border border-white/10 rounded-[28px]" />
+              <div className="absolute inset-0 border border-white/10 rounded-[24px]" />
               <div className="absolute -right-44 bottom-[-180px] h-[520px] w-[520px] rounded-full bg-white/8 blur-3xl" />
             </div>
           )}
@@ -127,26 +128,26 @@ function Slab({ service, index }: { service: Service; index: number }) {
           {index === 3 && (
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-b from-[#062a33]/70 via-[#061f26] to-black/75" />
-              <div className="absolute inset-x-0 top-0 h-[140px] bg-gradient-to-b from-white/10 to-transparent" />
-              <div className="absolute inset-0 opacity-[0.18] [background:radial-gradient(circle_at_20%_80%,rgba(11,85,96,0.30),transparent_55%)]" />
+              <div className="absolute inset-x-0 top-0 h-[130px] bg-gradient-to-b from-white/10 to-transparent" />
+              <div className="absolute inset-0 opacity-[0.16] [background:radial-gradient(circle_at_20%_80%,rgba(11,85,96,0.30),transparent_55%)]" />
               <div className="absolute inset-0 opacity-[0.12] [background:radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.14),transparent_55%)]" />
-              <div className="absolute inset-x-10 bottom-10 h-px bg-white/10" />
+              <div className="absolute inset-x-10 bottom-9 h-px bg-white/10" />
             </div>
           )}
 
-          {/* Content */}
-          <div className="relative px-6 py-16 sm:px-12">
+          {/* Content (smaller) */}
+          <div className="relative px-6 py-10 sm:px-10 sm:py-12">
             <div className="mx-auto max-w-3xl">
-              <h2 className="text-center text-[clamp(2rem,3.6vw,2.9rem)] font-semibold text-white">
+              <h2 className="text-center text-[clamp(1.7rem,3.0vw,2.35rem)] font-semibold text-white">
                 {service.title}
               </h2>
-              <div className="mt-5">
+              <div className="mt-4">
                 <RevealLines lines={service.paragraphs} active={inView} />
               </div>
             </div>
           </div>
 
-          <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/10" />
+          <div className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-inset ring-white/10" />
         </div>
       </div>
     </section>
@@ -157,48 +158,279 @@ function BookNowStrip({ onClick }: { onClick: () => void }) {
   return (
     <section className="relative bg-white py-1">
       <div className="mx-auto max-w-6xl px-6">
-    <button
-      type="button"
-      onClick={() =>
-        document.getElementById("book-now")?.scrollIntoView({ behavior: "smooth", block: "start" })
-      }
-      className="group relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]"
-      aria-label="Book now"
-    >
-      {/* teal fill that expands left -> right */}
-      <span
-        className="
-          absolute inset-y-0 left-0 w-24
-          bg-[#0b5560]
-          transition-[width] duration-[850ms] ease-[cubic-bezier(.22,1,.36,1)]
-          group-hover:w-full
-        "
-      />
+        <button
+          type="button"
+          onClick={onClick}
+          className="group relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]"
+          aria-label="Book now"
+        >
+          <span
+            className="
+              absolute inset-y-0 left-0 w-24
+              bg-[#0b5560]
+              transition-[width] duration-[850ms] ease-[cubic-bezier(.22,1,.36,1)]
+              group-hover:w-full
+            "
+          />
+          <span
+            className="
+              pointer-events-none absolute inset-0 opacity-0
+              transition-opacity duration-[850ms]
+              group-hover:opacity-100
+              [background:radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.22),transparent_55%)]
+            "
+          />
+          <span
+            className="
+              relative z-10 flex items-center justify-center
+              px-8 py-5
+              text-base font-semibold tracking-wide
+              text-black transition-colors duration-[850ms]
+              group-hover:text-white
+            "
+          >
+            Book now
+          </span>
+        </button>
+      </div>
+    </section>
+  );
+}
 
-      {/* subtle sheen (optional, feels more premium) */}
-      <span
-        className="
-          pointer-events-none absolute inset-0 opacity-0
-          transition-opacity duration-[850ms]
-          group-hover:opacity-100
-          [background:radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.22),transparent_55%)]
-        "
-      />
+function ProcessNode({
+  step,
+  title,
+  lines,
+  tone = "dark",
+}: {
+  step: string;
+  title: string;
+  lines: string[];
+  tone?: "dark" | "light";
+}) {
+  const base =
+    "relative overflow-hidden rounded-2xl border shadow-[0_18px_60px_rgba(0,0,0,0.08)]";
+  const light = "border-black/10 bg-white";
+  const dark = "border-white/10 bg-[#061f26]";
 
-      {/* text: black -> white on hover */}
-      <span
-        className="
-          relative z-10 flex items-center justify-center
-          px-8 py-5
-          text-base font-semibold tracking-wide
-          text-black transition-colors duration-[850ms]
-          group-hover:text-white
-        "
-      >
-        Book now
-      </span>
-    </button>
-  </div>
+  return (
+    <div className={[base, tone === "dark" ? dark : light].join(" ")}>
+      {tone === "dark" ? (
+        <>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/55 via-[#062a33]/70 to-black/70" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background:radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.14),transparent_55%)]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+        </>
+      ) : (
+        <>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/18 via-white to-white" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background:radial-gradient(circle_at_15%_30%,#0b5560,transparent_55%),radial-gradient(circle_at_85%_40%,#062a33,transparent_55%)]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
+        </>
+      )}
+
+      <div className="relative p-4 sm:p-5">
+        <div className="flex items-start gap-3">
+          <div
+            className={[
+              "shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide",
+              tone === "dark" ? "bg-white/10 text-white/90" : "bg-black/5 text-black/60",
+            ].join(" ")}
+          >
+            {step}
+          </div>
+
+          <div className="min-w-0">
+            <div className={tone === "dark" ? "text-white/95 font-semibold" : "text-black/85 font-semibold"}>
+              {title}
+            </div>
+
+            <ul className={tone === "dark" ? "mt-2 space-y-1 text-sm text-white/80" : "mt-2 space-y-1 text-sm text-black/60"}>
+              {lines.map((t, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className={tone === "dark" ? "mt-[7px] h-1 w-1 rounded-full bg-white/35" : "mt-[7px] h-1 w-1 rounded-full bg-black/20"} />
+                  <span className="min-w-0">{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DetailedServiceFlow() {
+  const { ref, inView } = useInView<HTMLDivElement>({
+    threshold: 0.15,
+    rootMargin: "0px 0px -10% 0px",
+  });
+
+  const motion =
+    "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]";
+  const line = "bg-[#0b5560]/22";
+
+  return (
+    <section className="py-6 sm:py-8">
+      <div className="mx-auto max-w-6xl px-6" ref={ref}>
+        <div
+          className={[
+            "relative overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]",
+            motion,
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+          ].join(" ")}
+        >
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/16 via-white to-white" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background:radial-gradient(circle_at_20%_25%,#0b5560,transparent_55%),radial-gradient(circle_at_80%_35%,#062a33,transparent_55%)]" />
+          <div className="pointer-events-none absolute -inset-y-10 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-[#0b5560]/18 to-transparent blur-xl opacity-80 onmain-glare" />
+          <div className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-inset ring-black/5" />
+
+          <div className="relative p-5 sm:p-7">
+            <div className="text-xs uppercase tracking-[0.25em] text-black/45">
+              Onmain Systems
+            </div>
+            <h2 className="mt-2 text-[clamp(1.6rem,2.6vw,2.1rem)] font-semibold tracking-tight text-black/90">
+              How the service works
+            </h2>
+            <p className="mt-1 text-sm text-black/60">
+              Clear steps, with two delivery options: on-site or pickup & return.
+            </p>
+
+            <div className="mt-5">
+              <div className="mx-auto max-w-3xl">
+                <ProcessNode
+                  step="1"
+                  title="Contact"
+                  lines={[
+                    "Tell us what’s wrong (or what you want to build).",
+                    "Call, email, or message — whatever is easiest.",
+                  ]}
+                  tone="dark"
+                />
+
+                <div className="flex justify-center">
+                  <div className={`my-3 h-6 w-px ${line}`} />
+                </div>
+
+                <ProcessNode
+                  step="2"
+                  title="Triage + quotation"
+                  lines={[
+                    "We ask a few questions and confirm the scope.",
+                    "You receive a clear quote before any work starts.",
+                  ]}
+                  tone="light"
+                />
+
+                <div className="flex justify-center">
+                  <div className={`my-3 h-6 w-px ${line}`} />
+                </div>
+
+                <ProcessNode
+                  step="3"
+                  title="Choose the service route"
+                  lines={[
+                    "On-site for many jobs (software, installs, most builds).",
+                    "Pickup & workshop for deeper repairs.",
+                  ]}
+                  tone="dark"
+                />
+              </div>
+
+              {/* Branch connector */}
+              <div className="mx-auto max-w-3xl">
+                <div className="flex justify-center">
+                  <div className={`my-3 h-6 w-px ${line}`} />
+                </div>
+
+                <div className="relative hidden md:block">
+                  <div className={`mx-auto h-px w-[86%] ${line}`} />
+                  <div className="mx-auto flex w-[86%] justify-between">
+                    <div className={`h-4 w-px ${line}`} />
+                    <div className={`h-4 w-px ${line}`} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Branches */}
+              <div className="mt-2 grid gap-4 md:grid-cols-2 md:gap-6">
+                <div className={motion + (inView ? " opacity-100 translate-y-0" : " opacity-0 translate-y-2")}>
+                  <div className="mb-2 text-sm font-semibold text-black/70">
+                    Option A — On-site
+                  </div>
+                  <ProcessNode
+                    step="A"
+                    title="On-site visit"
+                    lines={[
+                      "We arrive at the agreed time.",
+                      "Diagnose, repair, optimise, and verify on-site when suitable.",
+                      "PC builds: parts list approved first; build & testing typically on-site.",
+                    ]}
+                    tone="dark"
+                  />
+                </div>
+
+                <div
+                  className={motion + (inView ? " opacity-100 translate-y-0" : " opacity-0 translate-y-2")}
+                  style={{ transitionDelay: "80ms" }}
+                >
+                  <div className="mb-2 text-sm font-semibold text-black/70">
+                    Option B — Pickup & return
+                  </div>
+                  <ProcessNode
+                    step="B"
+                    title="Pickup → workshop → return"
+                    lines={[
+                      "We collect the device from your address.",
+                      "Workshop repair + testing, with updates if anything changes.",
+                      "Delivered back once ready.",
+                    ]}
+                    tone="dark"
+                  />
+                </div>
+              </div>
+
+              {/* Merge */}
+              <div className="mt-5">
+                <div className="flex justify-center">
+                  <div className={`my-3 h-6 w-px ${line}`} />
+                </div>
+
+                <div className="mx-auto max-w-3xl">
+                  <ProcessNode
+                    step="4"
+                    title="Approval + payment"
+                    lines={[
+                      "You confirm everything is working.",
+                      "Payment is taken after approval.",
+                    ]}
+                    tone="dark"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes onmainGlare {
+              0% {
+                transform: translateX(0) rotate(12deg);
+              }
+              100% {
+                transform: translateX(220%) rotate(12deg);
+              }
+            }
+            .onmain-glare {
+              animation: onmainGlare 5.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .onmain-glare {
+                animation: none;
+              }
+            }
+          `}</style>
+        </div>
+      </div>
     </section>
   );
 }
@@ -208,7 +440,7 @@ function ContactForm() {
   const [status, setStatus] = useState<null | "ok" | "err">(null);
   const [msg, setMsg] = useState<string>("");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus(null);
     setMsg("");
@@ -222,32 +454,35 @@ function ContactForm() {
       description: String(form.get("description") || ""),
     };
 
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
-  const res = await fetch("/api/contact", {
-  method: "POST",
-  headers: { "content-type": "application/json" },
-  body: JSON.stringify(payload),
-});
+    let data: any = {};
+    try {
+      data = await res.json();
+    } catch {
+      data = {};
+    }
 
-let data: any = {};
-try {
-  data = await res.json();
-} catch {
-  data = {};
-}
+    if (res.ok) {
+      setStatus("ok");
+      setMsg(
+        data?.message ||
+          "Thank you for contacting us, we will get back to you as soon as possible."
+      );
+      (e.currentTarget as HTMLFormElement).reset();
+    } else {
+      setStatus("err");
+      setMsg(
+        data?.error ||
+          "Thank you for contacting us, we will get back to you as soon as possible."
+      );
+    }
 
-if (res.ok) {
-  setStatus("ok");
-  setMsg(
-    data?.message ||
-      "Thank you for contacting us, we will get back to you as soon as possible."
-  );
-  (e.currentTarget as HTMLFormElement).reset();
-} else {
-  setStatus("err");
-  setMsg(data?.error || "Thank you for contacting us, we will get back to you as soon as possible.");
-}
-
+    setLoading(false);
   }
 
   return (
@@ -302,9 +537,7 @@ if (res.ok) {
                 {loading ? "Sending..." : "Send"}
               </button>
 
-              {status ? (
-                <p className="text-center text-sm text-white/80">{msg}</p>
-              ) : null}
+              {status ? <p className="text-center text-sm text-white/80">{msg}</p> : null}
             </form>
           </div>
         </div>
@@ -314,42 +547,43 @@ if (res.ok) {
 }
 
 export default function ITMaintenancePage() {
-
- useEffect(() => {
-    // Always start at the top when arriving on this route
+  useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
-  
+
   const services: Service[] = useMemo(
     () => [
       {
         id: "device-repairs",
         title: "Device Repairs",
         paragraphs: [
-          "We offer our premium repair service for the following devices: Computers | Laptops | Phones | Tablets | Printers | TVs",
+          "Diagnostics and repairs for computers, laptops, phones, tablets, printers, TVs, and more.",
+          "Clear pricing and honest recommendations before any work starts.",
         ],
       },
       {
         id: "pickup-delivery",
-        title: "Same day pick-up and delivery service",
+        title: "Same-day pickup & return",
         paragraphs: [
-          "Our technician can collect your device from your doorstep, repair it at the Onmain Systems workshop, and deliver it straight back to you at no extra cost.",
+          "We can collect your device, repair it in our workshop, and deliver it back to you.",
+          "Same-day turnaround where possible — with no extra cost for pickup/return.",
         ],
       },
       {
         id: "software-maintenance",
-        title: "General software maintenance and website development",
+        title: "Software maintenance & website support",
         paragraphs: [
-          "If you require software support, we provide a general service to help with any issue, such as: virus and malware removal, data recovery and backup solutions, blue screen or no display fix, system cleanup and optimisation, and more.",
+          "Malware removal, slow PC fixes, errors, setup, backups, and data recovery options.",
+          "Website development and ongoing updates for small businesses.",
         ],
       },
       {
         id: "computer-builds",
-        title: "Computer builds",
+        title: "Custom computer builds",
         paragraphs: [
-          "Our computer building service offers you personalised recommendations based on your budget.",
-          "The technician can build the computer for you at your home or at our workshop.",
-          "The price of each part is communicated with the customer, which can be either ordered by us or by you.",
+          "A personalised parts list based on your budget and what you need the PC for.",
+          "You approve every part before purchase (order through us or yourself).",
+          "Built and tested on-site (preferred) or in our workshop.",
         ],
       },
     ],
@@ -357,18 +591,17 @@ export default function ITMaintenancePage() {
   );
 
   function scrollToBookNow() {
-    document.getElementById("book-now")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document
+      .getElementById("book-now")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (
     <main className="bg-white">
-
-      {/* HERO */}
-       
-      {/* WHITE STRIP BUTTON (your red-circled area) */}
+      {/* WHITE STRIP BUTTON */}
       <BookNowStrip onClick={scrollToBookNow} />
 
-      {/* Our services band */}
+      {/* Our services band (slightly smaller) */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
@@ -376,9 +609,9 @@ export default function ITMaintenancePage() {
         </div>
 
         <div className="relative mx-auto max-w-6xl px-6">
-          <div className="flex min-h-[140px] items-center gap-6">
+          <div className="flex min-h-[110px] items-center gap-6">
             <div className="h-px flex-1 bg-black/15" />
-            <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] tracking-tight text-black/85">
+            <h2 className="text-center text-[clamp(1.8rem,3.6vw,3rem)] tracking-tight text-black/85">
               Our <span className="font-semibold">services</span>
             </h2>
             <div className="h-px flex-1 bg-black/15" />
@@ -386,7 +619,10 @@ export default function ITMaintenancePage() {
         </div>
       </section>
 
-      {/* Slabs */}
+      {/* Detailed process tree (new) */}
+      <DetailedServiceFlow />
+
+      {/* Slabs (smaller) */}
       {services.map((s, idx) => (
         <Slab key={s.id} service={s} index={idx} />
       ))}
