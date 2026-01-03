@@ -1,6 +1,5 @@
 "use client";
 
-
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -16,25 +15,13 @@ const NAV = [
   { href: "/about-us", label: "About us" },
 ];
 
-
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [open, setOpen] = useState(false);
   const ticking = useRef(false);
   const pathname = usePathname();
 
-  const [isDesktop, setIsDesktop] = useState(false);
-
-useEffect(() => {
-  const mq = window.matchMedia("(min-width: 768px)");
-  const onChange = () => setIsDesktop(mq.matches);
-  onChange();
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}, []);
-
-
-const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
+  const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -71,9 +58,9 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
     "absolute left-0 -bottom-1 h-[2px] w-full origin-left scale-x-0 bg-white/80 transition-transform duration-200 group-hover:scale-x-100";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16">
-      <div className="relative h-full overflow-hidden">
-        {/* Contact-only header background image (NO more page-fixed strip) */}
+    <header className="fixed top-0 left-0 right-0 z-[70] h-16 isolate">
+      <div className="relative h-full">
+        {/* Page-specific header background (contact/about) */}
         {showHeaderBg && (
           <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
             <Image
@@ -84,7 +71,6 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
               quality={70}
               className="object-cover object-center"
               sizes="100vw"
-              
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/25 to-black/60" />
           </div>
@@ -99,9 +85,8 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
             backgroundColor: GLASS_TINT,
             borderBottom: `1px solid rgba(255, 255, 255, ${0.12 * t})`,
             boxShadow: `0 10px 30px rgba(0, 0, 0, ${0.18 * t})`,
-            backdropFilter: isScrolled && isDesktop ? "blur(16px) saturate(180%)" : "none",
-            WebkitBackdropFilter: isScrolled && isDesktop ? "blur(16px) saturate(180%)" : "none",
-
+            backdropFilter: isScrolled ? "blur(16px) saturate(180%)" : "none",
+            WebkitBackdropFilter: isScrolled ? "blur(16px) saturate(180%)" : "none",
             transition: "opacity 180ms ease",
           }}
         />
@@ -118,12 +103,17 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
         </div>
 
         <div className="relative z-30 mx-auto flex h-full max-w-6xl items-center px-4 sm:px-6">
-          {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image src="/logo.png" alt="Onmain" width={160} height={32} priority className="h-8 w-auto" />
+            <Image
+              src="/logo.png"
+              alt="Onmain"
+              width={160}
+              height={32}
+              priority
+              className="h-8 w-auto"
+            />
           </Link>
 
-          {/* Desktop nav */}
           <nav className="ml-auto hidden items-center gap-8 text-sm md:flex">
             {NAV.map((item) => (
               <Link key={item.href} href={item.href} className={linkClass}>
@@ -133,25 +123,31 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
             ))}
           </nav>
 
-          {/* Mobile burger */}
+          {/* Mobile burger (this is your working X version) */}
           <button
             type="button"
             aria-label="Open menu"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
+            className="relative z-[80] ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md md:hidden"
           >
             <span className="relative h-4 w-5 translate-y-[1px]">
               <span
-                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+                  will-change-transform
+                  transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
                   ${open ? "top-[7px] w-[19px] rotate-45 scale-105" : "top-0 w-5 rotate-0 scale-100"}`}
               />
               <span
-                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[opacity,transform,width] duration-250 ease-[cubic-bezier(.22,1,.36,1)]
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+                  will-change-transform
+                  transition-[opacity,transform,width] duration-250 ease-[cubic-bezier(.22,1,.36,1)]
                   ${open ? "top-[7px] w-[19px] opacity-0 scale-95" : "top-[7px] w-5 opacity-100 scale-100"}`}
               />
               <span
-                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
+                className={`absolute left-1/2 h-[2px] -translate-x-1/2 bg-white
+                  will-change-transform
+                  transition-[transform,top,width,opacity] duration-300 ease-[cubic-bezier(.22,1,.36,1)]
                   ${open ? "top-[7px] w-[19px] -rotate-45 scale-105" : "top-[14px] w-5 rotate-0 scale-100"}`}
               />
             </span>
@@ -159,7 +155,12 @@ const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
         </div>
 
         {/* Mobile menu overlay */}
-        <div className={`fixed inset-0 z-[60] md:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
+        <div
+  className={`fixed left-0 right-0 top-16 bottom-0 z-[60] md:hidden ${
+    open ? "pointer-events-auto" : "pointer-events-none"
+  }`}
+>
+
           <div
             onClick={() => setOpen(false)}
             className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0"}`}
