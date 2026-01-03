@@ -161,34 +161,37 @@ function BookNowStrip({ onClick }: { onClick: () => void }) {
         <button
           type="button"
           onClick={onClick}
-          className="group relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]"
+          className="
+            group relative w-full overflow-hidden rounded-2xl
+            border border-black/10 bg-white
+            shadow-[0_18px_60px_rgba(0,0,0,0.08)]
+          "
           aria-label="Book now"
         >
+          {/* static blue glares (no animation) */}
           <span
+            aria-hidden
             className="
-              absolute inset-y-0 left-0 w-24
-              bg-[#0b5560]
-              transition-[width] duration-[850ms] ease-[cubic-bezier(.22,1,.36,1)]
-              group-hover:w-full
+              pointer-events-none absolute -inset-y-10 left-[-28%] w-[60%] rotate-12
+              bg-gradient-to-r from-transparent via-[#0b5560]/18 to-transparent
+              blur-xl opacity-90
             "
           />
           <span
+            aria-hidden
             className="
-              pointer-events-none absolute inset-0 opacity-0
-              transition-opacity duration-[850ms]
-              group-hover:opacity-100
-              [background:radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.22),transparent_55%)]
+              pointer-events-none absolute -inset-y-10 right-[-28%] w-[60%] -rotate-12
+              bg-gradient-to-r from-transparent via-[#0b5560]/18 to-transparent
+              blur-xl opacity-90
             "
           />
+
           <span
-            className="
-              relative z-10 flex items-center justify-center
-              px-8 py-5
-              text-base font-semibold tracking-wide
-              text-black transition-colors duration-[850ms]
-              group-hover:text-white
-            "
-          >
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-black/10"
+          />
+
+          <span className="relative z-10 flex items-center justify-center px-8 py-5 text-base font-semibold tracking-wide text-black/85">
             Book now
           </span>
         </button>
@@ -196,6 +199,9 @@ function BookNowStrip({ onClick }: { onClick: () => void }) {
     </section>
   );
 }
+
+
+
 
 function ProcessNode({
   step,
@@ -261,28 +267,14 @@ function ProcessNode({
 }
 
 function DetailedServiceFlow() {
-  const { ref, inView } = useInView<HTMLDivElement>({
-    threshold: 0.15,
-    rootMargin: "0px 0px -10% 0px",
-  });
-
-  const motion =
-    "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]";
   const line = "bg-[#0b5560]/22";
 
   return (
     <section className="py-6 sm:py-8">
-      <div className="mx-auto max-w-6xl px-6" ref={ref}>
-        <div
-          className={[
-            "relative overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]",
-            motion,
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
-          ].join(" ")}
-        >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="relative overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.08)]">
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0b5560]/16 via-white to-white" />
           <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background:radial-gradient(circle_at_20%_25%,#0b5560,transparent_55%),radial-gradient(circle_at_80%_35%,#062a33,transparent_55%)]" />
-          <div className="pointer-events-none absolute -inset-y-10 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-[#0b5560]/18 to-transparent blur-xl opacity-80 onmain-glare" />
           <div className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-inset ring-black/5" />
 
           <div className="relative p-5 sm:p-7">
@@ -354,7 +346,7 @@ function DetailedServiceFlow() {
 
               {/* Branches */}
               <div className="mt-2 grid gap-4 md:grid-cols-2 md:gap-6">
-                <div className={motion + (inView ? " opacity-100 translate-y-0" : " opacity-0 translate-y-2")}>
+                <div>
                   <div className="mb-2 text-sm font-semibold text-black/70">
                     Option A — On-site
                   </div>
@@ -370,10 +362,7 @@ function DetailedServiceFlow() {
                   />
                 </div>
 
-                <div
-                  className={motion + (inView ? " opacity-100 translate-y-0" : " opacity-0 translate-y-2")}
-                  style={{ transitionDelay: "80ms" }}
-                >
+                <div>
                   <div className="mb-2 text-sm font-semibold text-black/70">
                     Option B — Pickup & return
                   </div>
@@ -410,30 +399,12 @@ function DetailedServiceFlow() {
               </div>
             </div>
           </div>
-
-          <style jsx>{`
-            @keyframes onmainGlare {
-              0% {
-                transform: translateX(0) rotate(12deg);
-              }
-              100% {
-                transform: translateX(220%) rotate(12deg);
-              }
-            }
-            .onmain-glare {
-              animation: onmainGlare 5.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-            }
-            @media (prefers-reduced-motion: reduce) {
-              .onmain-glare {
-                animation: none;
-              }
-            }
-          `}</style>
         </div>
       </div>
     </section>
   );
 }
+
 
 function ContactForm() {
   const [loading, setLoading] = useState(false);

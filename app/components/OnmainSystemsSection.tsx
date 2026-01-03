@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 function useInView<T extends Element>(opts?: IntersectionObserverInit) {
@@ -25,15 +24,13 @@ function useInView<T extends Element>(opts?: IntersectionObserverInit) {
 type Props = {
   title?: string;
   description: string;
-  href: string;
-  linkText: string;
+  href: string; // keep props (no break), even if not used here
+  linkText: string; // keep props (no break), even if not used here
 };
 
 export default function OnmainSystemsSection({
   title = "Onmain Systems",
   description,
-  href,
-  linkText,
 }: Props) {
   const { ref, inView } = useInView<HTMLDivElement>({
     threshold: 0.15,
@@ -44,10 +41,7 @@ export default function OnmainSystemsSection({
     "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]";
 
   return (
-    // less gap from the bar above
-   <section className="pt-5 pb-4 sm:pt-8 sm:pb-6">
-
-      {/* closer to edges on mobile */}
+    <section className="pt-5 pb-4 sm:pt-8 sm:pb-6">
       <div className="mx-auto max-w-6xl px-1 sm:px-6" ref={ref}>
         {/* Headline banner */}
         <div
@@ -62,7 +56,6 @@ export default function OnmainSystemsSection({
           <div className="pointer-events-none absolute -inset-y-10 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-[#0b5560]/25 to-transparent blur-xl opacity-80 onmain-glare" />
           <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
 
-          {/* centred title */}
           <div className="relative flex min-h-[90px] items-center justify-center px-4 py-6 sm:px-8 text-center">
             <h2 className="text-[clamp(2.2rem,2.6vw,3.4rem)] font-semibold tracking-tight text-black/100">
               {title}
@@ -73,7 +66,7 @@ export default function OnmainSystemsSection({
         {/* Description panel */}
         <div
           className={[
-            "mt-2 relative overflow-hidden", // slightly tighter than mt-5
+            "mt-2 relative overflow-hidden",
             motion,
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
           ].join(" ")}
@@ -90,20 +83,10 @@ export default function OnmainSystemsSection({
             <div className="pointer-events-none absolute -inset-y-16 left-[-40%] w-[55%] rotate-12 bg-gradient-to-r from-transparent via-white/12 to-transparent blur-2xl opacity-70 onmain-glare" />
             <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
 
-            {/* slightly tighter padding on mobile */}
             <div className="relative p-6 sm:p-8 md:p-10">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <p className="max-w-xl leading-relaxed text-white/100">
-                  {description}
-                </p>
-
-                <Link
-                  href={href}
-                  className="text-white/ underline underline-offset-4 transition hover:text-white/90 md:text-right"
-                >
-                  {linkText}
-                </Link>
-              </div>
+              <p className="max-w-xl leading-relaxed text-white/100">
+                {description}
+              </p>
             </div>
           </div>
         </div>

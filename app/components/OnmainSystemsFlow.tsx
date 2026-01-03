@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 function Icon({
   name,
   className = "h-5 w-5",
@@ -86,7 +88,6 @@ export default function OnmainSystemsFlow() {
     { title: "Quote", icon: "quote" },
     { title: "Choose service", icon: "route" },
     { title: "On-site / pickup", icon: "service" },
-
     { title: "Approval + payment", icon: "payment" },
   ];
 
@@ -131,24 +132,21 @@ export default function OnmainSystemsFlow() {
                       )}
 
                       <div
-  className={
-    left
-      ? "w-[calc(50%-3rem)] pr-6"
-      : "ml-auto w-[calc(50%-3rem)] pl-12 pr-1"
-  }
->
-
-  <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
-  <div className="w-[130px] flex flex-col items-center text-center">
-    <Badge icon={s.icon} />
-    <div className="mt-2 text-[14px] font-semibold tracking-tight text-black/80 leading-tight">
-      {s.title}
-    </div>
-  </div>
-</div>
-
-</div>
-
+                        className={
+                          left
+                            ? "w-[calc(50%-3rem)] pr-6"
+                            : "ml-auto w-[calc(50%-3rem)] pl-12 pr-1"
+                        }
+                      >
+                        <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
+                          <div className="w-[130px] flex flex-col items-center text-center">
+                            <Badge icon={s.icon} />
+                            <div className="mt-2 text-[14px] font-semibold tracking-tight text-black/80 leading-tight">
+                              {s.title}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -175,6 +173,22 @@ export default function OnmainSystemsFlow() {
               </div>
 
               <div aria-hidden className="mx-auto mt-2 h-px w-[92%] bg-black/8" />
+            </div>
+
+            {/* FIND OUT MORE BUTTON (UNDER THE HOW IT WORKS RECTANGLE) */}
+            <div className="mt-5 flex justify-center">
+              <Link
+                href="/it-maintenance"
+                className="
+                  inline-flex items-center justify-center
+                  rounded-xl border border-black/10 bg-white
+                  px-6 py-3 text-sm font-semibold text-black/80
+                  shadow-[0_12px_40px_rgba(0,0,0,0.08)]
+                  hover:bg-black/[0.03]
+                "
+              >
+                Find out more
+              </Link>
             </div>
           </div>
         </div>
