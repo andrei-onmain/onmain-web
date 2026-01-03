@@ -4,6 +4,8 @@ import ReviewsCarousel from "./components/ReviewsCarousel";
 import MainSearchAISection from "./components/MainSearchAISection";
 import OnmainSystemsSection from "./components/OnmainSystemsSection";
 import ScrollDownButton from "./components/ScrollDownButton";
+import OnmainSystemsFlow from "./components/OnmainSystemsFlow";
+
 
 export default function HomePage() {
   return (
@@ -58,16 +60,18 @@ export default function HomePage() {
 
       {/* ONMAIN SYSTEMS */}
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4">
           <OnmainSystemsSection
             description="Our IT maintenance division that specialises in device diagnostics and repairs, along with software solutions and website development."
             href="/it-maintenance"
             linkText="Find out more"
           />
+
+          <OnmainSystemsFlow />
+
           <ReviewsCarousel />
         </div>
       </section>
-
       {/* MAINSEARCH AI */}
       <MainSearchAISection />
     </main>
