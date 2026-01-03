@@ -45,7 +45,8 @@ export default function OnmainSystemsSection({
 
   return (
     // less gap from the bar above
-    <section className="pt-5 pb-10 sm:pt-8 sm:pb-12">
+   <section className="pt-5 pb-4 sm:pt-8 sm:pb-6">
+
       {/* closer to edges on mobile */}
       <div className="mx-auto max-w-6xl px-1 sm:px-6" ref={ref}>
         {/* Headline banner */}
