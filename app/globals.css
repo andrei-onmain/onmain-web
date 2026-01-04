@@ -111,8 +111,10 @@ html {
   animation: floatDown 1.35s cubic-bezier(.22,1,.36,1) infinite;
 }
 
-html {
-  scroll-behavior: smooth;
+html,
+body {
+  overflow-x: hidden;
 }
+
 
 
