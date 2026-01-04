@@ -104,7 +104,7 @@ export default function AboutUsPage() {
                   <div className="mt-6 space-y-4 text-white/75 leading-relaxed">
                     <p>
                       Onmain launched in <span className="text-white">May 2023</span> with a simple goal: deliver premium,
-                      reliable tech services with a clear, professional customer experience.
+                      reliable services with a clear, professional customer experience.
                     </p>
                     <p>
                       In <span className="text-white">January 2024</span>, we created{" "}
