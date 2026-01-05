@@ -63,7 +63,7 @@ export default function Footer() {
 
             <div className="mt-7 text-sm font-semibold text-white/90">Resources</div>
             <ul className="mt-4 space-y-3 text-sm text-white/70">
-              <li><Link className="hover:text-white" href="/privacy">Privacy policy</Link></li>
+              <li><Link className="hover:text-white" href="/privacy-policy">Privacy policy</Link></li>
               <li><Link className="hover:text-white" href="/terms">Terms</Link></li>
               <li><Link className="hover:text-white" href="/cookies">Cookie policy</Link></li>
               <li><Link className="hover:text-white" href="/accessibility">Accessibility</Link></li>
