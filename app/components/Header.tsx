@@ -19,11 +19,8 @@ export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [open, setOpen] = useState(false);
   const ticking = useRef(false);
+  const lastScrollY = useRef(0);
   const pathname = usePathname();
-  useEffect(() => {
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-}, [pathname]);
-
 
   const showHeaderBg = pathname === "/contact" || pathname === "/about-us";
 
@@ -37,11 +34,23 @@ export default function Header() {
   }, [open]);
 
   useEffect(() => {
+    const THRESHOLD = 80;
     const onScroll = () => {
       if (ticking.current) return;
       ticking.current = true;
       requestAnimationFrame(() => {
-        setScrollY(window.scrollY || 0);
+        const currentY = window.scrollY || 0;
+        // Only update state if we cross the threshold or moved significantly
+        const wasScrolled = lastScrollY.current > 0;
+        const isScrolled = currentY > 0;
+        const crossedThreshold = 
+          (lastScrollY.current < THRESHOLD && currentY >= THRESHOLD) ||
+          (lastScrollY.current >= THRESHOLD && currentY < THRESHOLD);
+        
+        if (wasScrolled !== isScrolled || crossedThreshold || Math.abs(currentY - lastScrollY.current) > 20) {
+          setScrollY(currentY);
+          lastScrollY.current = currentY;
+        }
         ticking.current = false;
       });
     };
@@ -72,7 +81,7 @@ export default function Header() {
               alt=""
               fill
               priority
-              quality={70}
+              quality={90}
               className="object-cover object-center"
               sizes="100vw"
             />

@@ -114,6 +114,23 @@ html {
 html,
 body {
   overflow-x: hidden;
+  /* Prevent scroll position being visible during navigation */
+  scroll-behavior: auto !important;
+}
+
+/* Performance: GPU acceleration for animated elements */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Containment for heavy card components */
+.contain-paint {
+  contain: paint;
+}
+
+.contain-layout {
+  contain: layout;
 }
 
 

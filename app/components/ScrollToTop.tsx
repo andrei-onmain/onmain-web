@@ -1,66 +1,68 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
+// Use useLayoutEffect on client, useEffect on server (SSR safety)
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 function scrollEverythingToTop() {
-  // window + document
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
-
-  // common scroll containers (in case you're scrolling inside a wrapper)
-  const selectors = [
-    "#scroll-root",
-    "[data-scroll-root='true']",
-    "main",
-    "[role='main']",
-  ];
-
-  for (const sel of selectors) {
-    const el = document.querySelector(sel) as HTMLElement | null;
-    if (!el) continue;
-
-    el.scrollTop = 0;
-    el.scrollLeft = 0;
-    if (typeof (el as any).scrollTo === "function") {
-      (el as any).scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
-  }
 }
 
 export default function ScrollToTop() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const prevPathname = useRef(pathname);
 
-  // stop browser restoring scroll on navigation/back-forward
+  // Disable browser scroll restoration
   useEffect(() => {
     try {
       window.history.scrollRestoration = "manual";
     } catch {}
   }, []);
 
-  // run after navigation + after paint (twice) + small fallback delay
+  // Intercept all internal link clicks to scroll BEFORE navigation
   useEffect(() => {
-    const run = () => scrollEverythingToTop();
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest("a");
+      
+      if (!anchor) return;
+      
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+      
+      // Only handle internal navigation (starts with / and not external)
+      const isInternal = href.startsWith("/") && !href.startsWith("//");
+      const isSamePage = href === pathname || href.startsWith("#");
+      
+      if (isInternal && !isSamePage) {
+        // Scroll to top IMMEDIATELY before Next.js navigation happens
+        scrollEverythingToTop();
+      }
+    };
 
-    // immediate
-    run();
+    document.addEventListener("click", handleClick, { capture: true });
+    return () => document.removeEventListener("click", handleClick, { capture: true });
+  }, [pathname]);
 
-    // after paint (more reliable)
-    requestAnimationFrame(() => requestAnimationFrame(run));
-
-    // fallback (images/fonts/layout shifts)
-    const t = window.setTimeout(run, 80);
-
-    return () => window.clearTimeout(t);
+  // Also scroll on route change (catches programmatic navigation)
+  useIsomorphicLayoutEffect(() => {
+    if (prevPathname.current !== pathname) {
+      scrollEverythingToTop();
+      prevPathname.current = pathname;
+    }
   }, [pathname, searchParams?.toString()]);
 
-  // BFCache restores scroll even if you do everything else
+  // BFCache handling
   useEffect(() => {
     const onPageShow = (e: PageTransitionEvent) => {
       if (e.persisted) {
-        requestAnimationFrame(() => requestAnimationFrame(scrollEverythingToTop));
+        scrollEverythingToTop();
       }
     };
     window.addEventListener("pageshow", onPageShow);

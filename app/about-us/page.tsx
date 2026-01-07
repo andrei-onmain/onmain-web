@@ -40,11 +40,9 @@ export default function AboutUsPage() {
           alt="Onmain background"
           fill
           priority
-           quality={70}
+          quality={90}
           className="object-cover object-center"
           sizes="100vw"
-          
-
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/20 to-black/55" />
       </div>
@@ -65,7 +63,7 @@ export default function AboutUsPage() {
             <div
               className={[
                 motion,
-                inView ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-2 blur-[1px]",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
               ].join(" ")}
             >
               <h1 className="text-center text-white text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-[0.18em]">

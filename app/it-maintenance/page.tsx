@@ -45,8 +45,8 @@ function RevealLines({
           key={i}
           className={[
             "text-center text-[clamp(0.98rem,1.55vw,1.18rem)] leading-relaxed text-white/85",
-            "transition-[opacity,transform,filter] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]",
-            active ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-2 blur-[1.2px]",
+            "transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]",
+            active ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
           ].join(" ")}
           style={{ transitionDelay: `${baseDelayMs + i * stepDelayMs}ms` }}
         >

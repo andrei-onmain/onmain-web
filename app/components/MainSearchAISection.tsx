@@ -10,8 +10,8 @@ export default function MainSearchAISection() {
       <div className="absolute inset-0 -z-10 bg-[#061f26]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b5560]/35 via-[#062a33]/55 to-black/75" />
 
-      {/* Rainbow glow (animated via globals.css) */}
-      <div className="absolute inset-0 -z-10 opacity-[0.22]">
+      {/* Rainbow glow (animated via globals.css) - contained for performance */}
+      <div className="absolute inset-0 -z-10 opacity-[0.22]" style={{ contain: 'strict' }}>
         <div className="msai-rainbowBlob absolute -left-48 top-[-140px] h-[520px] w-[520px] rounded-full" />
         <div className="msai-rainbowBlob2 absolute -right-56 bottom-[-180px] h-[620px] w-[620px] rounded-full" />
       </div>

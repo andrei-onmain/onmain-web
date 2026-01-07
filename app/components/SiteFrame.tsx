@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import TopHero from "./TopHero";
+import ScrollToTop from "./ScrollToTop";
 
 const NAV = [
   { href: "/it-maintenance", label: "IT maintenance" },
@@ -15,11 +16,6 @@ const NAV = [
 
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-
-  // ALWAYS load every page at the top (no animation)
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [pathname]);
 
   const isHome = pathname === "/";
   const match = NAV.find(
@@ -38,6 +34,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
 
       {!hideTopHero && <TopHero title={match?.label ?? "Onmain"} />}

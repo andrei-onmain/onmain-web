@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ScrollBrush({
   fadeDistance = 900, // px until the brush is almost gone
@@ -8,9 +8,17 @@ export default function ScrollBrush({
   fadeDistance?: number;
 }) {
   const [y, setY] = useState(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setY(window.scrollY || 0);
+    const onScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+      requestAnimationFrame(() => {
+        setY(window.scrollY || 0);
+        ticking.current = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

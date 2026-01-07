@@ -11,7 +11,7 @@ export default function TopHero({ title }: { title?: string }) {
         className="object-cover object-center"
         sizes="100vw"
         
-        quality={70}
+        quality={90}
       />
 
       {/* bottom fade like homepage */}
