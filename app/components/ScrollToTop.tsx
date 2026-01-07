@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // Use useLayoutEffect on client, useEffect on server (SSR safety)
 const useIsomorphicLayoutEffect =
@@ -15,7 +15,6 @@ function scrollEverythingToTop() {
 
 export default function ScrollToTop() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const prevPathname = useRef(pathname);
 
   // Disable browser scroll restoration
@@ -56,7 +55,7 @@ export default function ScrollToTop() {
       scrollEverythingToTop();
       prevPathname.current = pathname;
     }
-  }, [pathname, searchParams?.toString()]);
+  }, [pathname]);
 
   // BFCache handling
   useEffect(() => {
