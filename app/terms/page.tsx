@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Terms and Conditions for Onmain",
 };
 
-const LAST_UPDATED = "2026-02-03";
+const LAST_UPDATED = "2026-02-07";
 
 export default function TermsPage() {
   return (
@@ -502,6 +502,11 @@ export default function TermsPage() {
               </li>
               <li>
                 Information you provide may be shared with businesses when you request quotes.
+              </li>
+              <li>
+                When you provide your postcode, we may use it to determine your approximate location
+                within a 1-mile radius. This is used to provide locally relevant results, estimates,
+                and business recommendations. We do not use your postcode to identify your exact address.
               </li>
               <li>
                 Our use of your data is governed by our Privacy Policy.
