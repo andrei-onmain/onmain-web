@@ -3,6 +3,8 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import SiteFrame from "./components/SiteFrame";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -31,6 +33,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
 
         <SiteFrame>{children}</SiteFrame>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
