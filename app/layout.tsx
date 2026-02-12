@@ -3,7 +3,7 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import SiteFrame from "./components/SiteFrame";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({
