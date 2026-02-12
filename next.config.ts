@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/mainsearch-ai",
+        destination: "https://ai.onmain.co.uk",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
